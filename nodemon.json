@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "configs/**"
+    ],
+    "ext": "json,js,ts",
+    "exec": "node -r ts-node/register -- src/main.ts",
+    "env": {}
+}

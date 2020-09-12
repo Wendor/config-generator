@@ -1,0 +1,4 @@
+hostname $NAME_SWITCH
+ip $IP
+model $MODEL
+address $ADDRESS

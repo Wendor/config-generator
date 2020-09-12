@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Config Generator",
+    "description": "Мега-генератор конфигов.",
+    "contact": {
+      "email": "weny@bk.ru"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/generate": {
+      "post": {
+        "tags": [
+          "Configs"
+        ],
+        "summary": "Сгенерировать конфиг",
+        "operationId": "generate",
+        "requestBody": {
+          "description": "Настройки генерации",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Config"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success!"
+          },
+          "404": {
+            "description": "Шаблон не найден",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/generate/{template}": {
+      "post": {
+        "tags": [
+          "Configs"
+        ],
+        "summary": "Сгенерировать конфиг для 'таблицы'",
+        "consumes": [
+          "text/plain"
+        ],
+        "operationId": "generate_from_table",
+        "parameters": [
+          {
+            "name": "template",
+            "in": "path",
+            "description": "Имя шаблона.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": []
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "example": "IP              MODEL           NAME_SWITCH             ADDRESS\n192.168.68.3\tDES-3200-28\tPavlovskiy-213(2)\tПавловский-213(2)\n192.168.68.4\tDES-3200-28\tPavlovskiy-227(6)\tПавловский-227(6)\n192.168.68.5\tDES-3028\tPavlovskiy-227(3)\tПавловский-227(3)\n",
+                "type": "string"
+              }
+            }
+            
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success!"
+          },
+          "404": {
+            "description": "Шаблон не найден",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Config": {
+        "hidden": true,
+        "required": [
+          "data",
+          "template"
+        ],
+        "type": "object",
+        "properties": {
+          "template": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Data"
+          }
+        }
+      },
+      "Data": {
+        "type": "object",
+        "properties": {
+          "NAME_SWITCH": {
+            "type": "string"
+          },
+          "CVLAN": {
+            "type": "string"
+          },
+          "MNGT_VLAN": {
+            "type": "string"
+          },
+          "IP_ADDRESS_SNTP": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
